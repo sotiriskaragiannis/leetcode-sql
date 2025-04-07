@@ -4,8 +4,8 @@ SELECT
     Signups.user_id,
     IF(action IS NOT NULL,
         -- Calculate the rate if not null
-        COUNT(CASE WHEN action='confirmed' THEN Signups.user_id END) /
-        COUNT(CASE WHEN action='confirmed' OR action='timeout' THEN Signups.user_id END),
+        ROUND(COUNT(CASE WHEN action='confirmed' THEN Signups.user_id END) /
+        COUNT(CASE WHEN action='confirmed' OR action='timeout' THEN Signups.user_id END), 2),
         -- If null -> zero
         0
         ) as confirmation_rate
